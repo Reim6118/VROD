@@ -6,10 +6,7 @@ using WVR_Log;
 
 public class button_pressed : MonoBehaviour
 {
-    /*static public int up=0;
-    static public int down=0;
-    static public int left=0;
-    static public int right=0;*/
+    
     static public string key;
 
     public void Update()
