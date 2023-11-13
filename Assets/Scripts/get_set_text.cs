@@ -8,10 +8,7 @@ public class get_set_text : MonoBehaviour
     public static string ip;
     public void setget()
     {
-      
         ip = Button.GetComponent<Text>().text;
-
-
     }
     void OnDisable()
     {
