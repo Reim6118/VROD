@@ -164,25 +164,6 @@ public class reciver : MonoBehaviour
     }
 
 
-    // Update is called once per frame
-    void Update()
-    {
-
-
-    }
-
-
-    void LOG(string messsage)
-    {
-        if (enableLog)
-            Debug.Log(messsage);
-    }
-
-    void LOGWARNING(string messsage)
-    {
-        if (enableLog)
-            Debug.LogWarning(messsage);
-    }
 
     void OnApplicationQuit()
     {
