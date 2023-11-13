@@ -119,7 +119,7 @@ public class _TextureReceiver : MonoBehaviour
             //Display Image on the main Thread
             Loom.QueueOnMainThread(() => {
                // loadReceivedImage(imageBytes);
-               //改成看機器人要怎麽收
+               
                 readyToReadAgain = true;
             });
         }
