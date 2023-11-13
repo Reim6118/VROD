@@ -70,23 +70,27 @@ public sealed class WaveVR_DevicePoseTracker : MonoBehaviour
 	public bool trackPosition = true;
 	[Tooltip("Effective only when Track Position is true.")]
 	public bool EnableNeckModel = true;
-    public static Vector3 z;
 	public bool inverseRotation = false;
-    public static Quaternion r;
-    public bool trackRotation = true;
+ 	public WVR_TrackTiming timing = WVR_TrackTiming.WhenNewPoses;
+  	public static WaveVR_Utils.RigidTransform rigid_pose = WaveVR_Utils.RigidTransform.identity;
+
+  	public static Vector3 z;
+        public static Quaternion r;
+	public static float euler_rot;
+    	public static string data_rot;
+    	public static string data_pos;
+    	public bool trackRotation = true;
+     	public int port = 8899;
+   	
+    
     private TcpListener listener;
-    public int port = 8899;
-	public WVR_TrackTiming timing = WVR_TrackTiming.WhenNewPoses;
     private TcpListener listner;
     private List<TcpClient> clients = new List<TcpClient>();
     private bool stop = false;
     private WVR_DevicePosePair_t wvr_pose = new WVR_DevicePosePair_t ();
-	public static WaveVR_Utils.RigidTransform rigid_pose = WaveVR_Utils.RigidTransform.identity;
     byte[] pos_bytes = null;
     byte[] rot_bytes = null;
-    public static float euler_rot;
-    public static string data_rot;
-    public static string data_pos;
+    
     const int send_receive_count = 15;
 	void Update()
 	{
@@ -103,7 +107,7 @@ public sealed class WaveVR_DevicePoseTracker : MonoBehaviour
 			rigid_pose = device.rigidTransform;
 		}
 
-       Convertor(wvr_pose, rigid_pose);
+       Convertor(wvr_pose, rigid_pose);		// convert the headset pose into the format that we want
       //  updatePose(wvr_pose, rigid_pose);
 
     }
@@ -127,6 +131,7 @@ public sealed class WaveVR_DevicePoseTracker : MonoBehaviour
     //    updatePose(wvr_pose, rigid_pose);
 
     }
+    //convert the headset position into ROS format
     private void Convertor(WVR_DevicePosePair_t pose, WaveVR_Utils.RigidTransform rtPos)
     {
         //Update holder
@@ -135,7 +140,7 @@ public sealed class WaveVR_DevicePoseTracker : MonoBehaviour
             if (inversePosition)
             {
                 Vector3 x = -rtPos.pos;
-                data_pos = x.x + "," + x.y + "." + x.z;
+                data_pos = x.x + "," + x.y + "." + x.z;	
                 Debug.Log("<color=blue>Rot bytes:</color>" + data_pos);
 
             }
@@ -153,7 +158,6 @@ public sealed class WaveVR_DevicePoseTracker : MonoBehaviour
             {
                 r = Quaternion.Inverse(rtPos.rot);
                 Vector3 z = r.eulerAngles;
-                //Debug.LogWarning("z in posetracker:" + z);
                 euler_rot = z.y;
                 data_rot = r.x + "," + r.y + "," + r.z + "," + r.w;
                 //    byte[] rot_bytes = Encoding.ASCII.GetBytes(data_rot);
@@ -176,7 +180,8 @@ public sealed class WaveVR_DevicePoseTracker : MonoBehaviour
             }
         }
     }
-    //Converts the data size to byte array and put result to the fullBytes array
+    
+    //converts the data size to byte array and put result to the fullBytes array
     void byteLengthToFrameByteArray(int byteLength, byte[] fullBytes)
     {
         //Clear old data
@@ -187,39 +192,6 @@ public sealed class WaveVR_DevicePoseTracker : MonoBehaviour
         bytesToSendCount.CopyTo(fullBytes, 0);
     }
 
-    /* void updatePose(WVR_DevicePosePair_t pose, WaveVR_Utils.RigidTransform rtPose)
-     {
-         if (trackPosition)
-         {
-             if (inversePosition)
-             {
-                 transform.localPosition = -rtPose.pos;
-                 Debug.Log("<color=red>In update pose");
-             }
-             else
-             {
-                 transform.localPosition = rtPose.pos;
-                 Debug.Log("<color=red>In update pose");
-
-             }
-         }
-         if (trackRotation)
-         {
-             if (inverseRotation)
-             {
-                 transform.localRotation = Quaternion.Inverse(rtPose.rot);
-                 Debug.Log("<color=red>In update pose");
-             }
-
-
-             else
-             {
-                 transform.localRotation = rtPose.rot;
-                 Debug.Log("<color=red>In update pose");
-             }
-         }
-
-         }*/
 
     void OnEnable()
     {
