@@ -42,7 +42,10 @@ namespace ROSBridgeLib
                 }
             }   
 
-            // Update is called once per frame
+            
+            /*further convert the VR position that is already converted to ROS likely format into rotation speed and linear velocity for going forwards and backwards. 
+            It is the transmit(publish) to the ROS system using ROSbridge API*/
+            
             void FixedUpdate()
             {
                 a = Vector3.zero;
