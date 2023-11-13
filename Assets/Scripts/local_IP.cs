@@ -7,7 +7,7 @@ public class local_IP : MonoBehaviour
 {
     public GameObject displayText;
     private void Start()
-     
+    
     {
         string IPv4 = IPManager.GetIP(ADDRESSFAM.IPv4);
         string IPv6 = IPManager.GetIP(ADDRESSFAM.IPv6);
