@@ -80,13 +80,16 @@ public class Send_Rot : MonoBehaviour
 
             holder = WaveVR_DevicePoseTracker.euler_rot + "," + button_pressed.key;
             Debug.LogWarning("Send_Rot_euler_rot:" + WaveVR_DevicePoseTracker.r.eulerAngles);
-            //button_pressed.up + "," + button_pressed.down + "," + button_pressed.left + "," + button_pressed.right;
-            //byte[] posbyte = ASCIIEncoding.ASCII.GetBytes(WaveVR_DevicePoseTracker.data_pos);
+            
+            button_pressed.up + "," + button_pressed.down + "," + button_pressed.left + "," + button_pressed.right;
+            byte[] posbyte = ASCIIEncoding.ASCII.GetBytes(WaveVR_DevicePoseTracker.data_pos); //pack all the control commands into one byte and sent through socket
+            
             byte[] rotbyte = ASCIIEncoding.ASCII.GetBytes(holder);
-            //byte[] combine_byte = new byte[posbyte.Length + rotbyte.Length];
-            //System.Buffer.BlockCopy(posbyte, 0, combine_byte, 0, posbyte.Length);
-            //System.Buffer.BlockCopy(rotbyte, 0, combine_byte, posbyte.Length, rotbyte.Length);
-            //Debug.Log("Combine_byte:" + combine_byte);
+            
+            byte[] combine_byte = new byte[posbyte.Length + rotbyte.Length];
+            System.Buffer.BlockCopy(posbyte, 0, combine_byte, 0, posbyte.Length);
+            System.Buffer.BlockCopy(rotbyte, 0, combine_byte, posbyte.Length, rotbyte.Length);
+            Debug.Log("Combine_byte:" + combine_byte);
             readyToGetFrame = false;
             Loom.RunAsync(() =>
             {
