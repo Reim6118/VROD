@@ -24,7 +24,14 @@ A VR application is developed with Unity to control the ROS framework AGV, witho
 
 ### Visual data stream from AGV into VR
 
-1. Receive the video stream from the Realsense camera through a dedicated Python server running on the Linux system of the AGV.
+1. Receive the video stream from the Realsense camera and Slam visualization data through a dedicated server running on the Linux system of the AGV.
+2. Receive thermal video streaming that is passed through obejct detection model built with Yolov3.
+
+## ROS Environment
+
+Laser scanned data is passed to slam_gmapping node and then visualized with rviz package. The visualized slam data is then serve as a video streaming
+
+   
 
 
 ####
