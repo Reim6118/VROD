@@ -29,8 +29,7 @@ A VR application is developed with Unity to control the ROS framework AGV, witho
 
 ## ROS Environment
 
-Laser scanned data is passed to slam_gmapping node and then visualized with rviz package. The visualized slam data is then serve as a video streaming
-
+Laser scan data is transmitted to the slam_gmapping node for processing, and the resulting SLAM data is visualized using the rviz package. Subsequently, the visualized SLAM data, along with the video feed from the RealSense camera, is streamed from a server established on the Linux system of the AGV.
    
 
 
