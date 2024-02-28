@@ -1,12 +1,35 @@
 # VROD
+#### This research aims to create an intuitive way to control AGV for use in scenario involving varying levels of luminosity in the environment.
 
-Unity VR application to control ROS framework robot, with basic movement and slam mapping visualization in VR.
+A VR application is developed with Unity to control the ROS framework AGV, without the use of VR controller, one can directly control the AGV with their head tilting to different angles. Meanwhile, the visual image seen from the AGV is stream into the VR with the slam mapping showing on the top left corner of VR.
 - Head up -> robot move forward
 - Down -> backwards
 - Looking left -> turn left
 - Looking right -> turn right
 
+# System Framework
 <img width="500" alt="system_overview" src="https://github.com/Reim6118/VROD/assets/32570797/7d939e94-cfe3-403a-aff6-c2940f848c0f">
+
+#### The system can be divided into three sections:&nbsp; 1.VR application built with Unity &nbsp;  2.Nodes set up in Ros environment &nbsp; 3.Thermal image object detection
+
+## VR application
+
+### Control AGV
+
+
+1. To control the AGV intuitively, gyroscope data is first extracted from VR. 
+2. The quaternion data is converted to Euler angles before being calculated into linear and angular velocity for each axis (X, Y, Z).
+3. The velocity data is then converted into Twist data that can be recognized by the ROS system.
+4. The Twist data is later published onto the cmd_vel topic to directly control the AGV with the help of the RosBridge library.
+
+### Visual data stream from AGV into VR
+
+1. Receive the video stream from the Realsense camera through a dedicated Python server running on the Linux system of the AGV.
+
+
+####
+
+
 
 <img width="300" alt="system_overview1" src="https://github.com/Reim6118/VROD/assets/32570797/88c7983a-95ec-47fd-93d0-3dad8094deb6">
 
